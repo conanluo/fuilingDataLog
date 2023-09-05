@@ -18,6 +18,8 @@ To pass parameters, use the get method to pass parameters.
 | data | format: year,month,day,mile,price,gallon | use","to connect those value and send to server need action="add" | 
 | return json | | {state:'success'} OR {state:'fail',error: err_info} | 
 
+<img src="https://github.com/conanluo/fuilingDataLog/blob/main/1.jpg" style="width:500px">
+
 ### view data by year
 | parameter | value | detail | 
 |:----- | :----: | ---- |
@@ -48,6 +50,8 @@ To pass parameters, use the get method to pass parameters.
 | sumYear | 2022 | Provide the summary year | 
 | return json | | {state:'success',<br>,oilChangeMile:14219,<br>oilChangeDate:"2022-09-02",<br>action:{type:"showSummary",isSuccess:true,showType:""}data:[{year:2022,(month:12,)mile:20321,gallon:9.321,mpg:34.21,total:3256,mpd:7.94,avgPrice:4.428},...]} OR {state:'fail',error: err_info} <br>(total->the days total money;mpd->mile per dollor)| 
 
+<img src="https://github.com/conanluo/fuilingDataLog/blob/main/2.jpg" style="width:500px">
+
 ### update oil-Change data
 | parameter | value | detail | 
 |:----- | :----: | ---- |
@@ -56,4 +60,8 @@ To pass parameters, use the get method to pass parameters.
 | sumYear | 2022 | Provide the summary year | 
 | return json | | {state:'success',<br>,oilChangeMile:14219,<br>oilChangeDate:"2022-09-02",<br>action:{type:"updateOilChange",isSuccess:true,showType:2}data:[{year:2022,(month:12,)mile:20321,gallon:9.321,mpg:34.21,total:3256,mpd:7.94,avgPrice:4.428},...]} OR {state:'fail',error: err_info} <br>(total->the days total money;mpd->mile per dollor)| 
 
+
+<img src="https://github.com/conanluo/fuilingDataLog/blob/main/3.jpg" style="width:500px">
+
+<img src="https://github.com/conanluo/fuilingDataLog/blob/main/4.jpg" style="width:500px">
 
