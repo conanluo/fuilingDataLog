@@ -1,0 +1,473 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/mui.picker.min.css" rel="stylesheet" />
+		<style>
+			
+			.btn-liteP{
+				background: #CCCCFF;
+			}
+			.btn-liteY{
+				background: #FFFF99;
+			}
+			#oilChange>.rowDate{
+				background: #996699;
+				padding: 2px 0 0 0;
+			}
+			#oilChange>.rowDate>.oilTitle{
+				background:#CC9999;
+			}
+			#oilChange>.rowDate>.oilItem1{
+				background:  #FFCCCC;
+			}
+			#oilChange>.rowDate>.oilItem2{
+				background:  #FF9999;
+			}
+			#updateBtn{
+				height: 24px; 
+				padding-top: 3px; 
+				font-size: 12px;
+			}
+			#sumTitle{
+				margin-top: 5px ;
+				text-align: right;
+			}
+				
+			#sumSelect{
+				background: #CCCCFF;
+				text-align: center;
+				/*width: 60px;
+				padding: 7px 0;*/
+			}
+			
+			
+			.cardTitle{
+				padding: 15px 10px 15px 10px;
+				font-size: 20px;
+			}
+			.tableTitle{
+				background-color: #996699;
+				padding: 2px 0 0 0;
+			}
+			.tableTitle>div{
+				background: #CC9999;
+				text-align: center;
+				padding: 14px 0;
+			}
+			.tableTitle>.tableDouble{
+				padding: 7px 0 0 0;
+			}
+			
+			
+			.tableBody{
+				background-color: #996699;
+				padding: 2px 0 0 0;
+			}
+			.tableBody>div{
+				background-color: #FF9999;
+				text-align: center;
+				padding: 14px 0;
+			}
+			.tableBodyEven>div{
+				background-color: #FFCCCC;
+			}
+			.tableBody>.tableBodyFirst{
+				background-color: #CC9999; 
+				text-align: center;  
+				font-size:15px;
+			}
+			.tableBody>.tableBodyDouble{
+				padding: 7px 0 0 0;
+			}
+			
+			
+			
+		</style>
+	</head>
+
+	<body id="main">
+<!-- 
+	<div class="mui-input-group">
+		<div class="mui-input-row">
+			<label>用户名</label>
+			<input type="text" class="mui-input-clear" placeholder="请输入用户名">
+		</div>
+		<div class="mui-input-row">
+			<label>密码</label>
+			<input type="text" class="mui-input-clear" placeholder="请输入密码">
+		</div>
+		<div class="mui-button-row">
+			<button type="button" class="mui-btn mui-btn-primary" id="ok">确认</button>
+			<button type="button" class="mui-btn mui-btn-danger" >取消</button>
+		</div>
+	</div> -->
+	<div class="mui-card">
+		<div class="mui-card-header">更换机油信息</div>
+		<div class="mui-card-content">
+			<div class="mui-card-content-inner" id="oilChange">
+				
+				<div class="mui-row rowDate">
+				    <div class="mui-col-sm-4 mui-col-xs-4 oilTitle">&nbsp;</div>
+				    <div class="mui-col-sm-4 mui-col-xs-4 oilTitle"> mile </div>
+				    <div class="mui-col-sm-4 mui-col-xs-4 oilTitle">Date</div>
+				</div>
+				<div class="mui-row rowDate">
+				    <div class="mui-col-sm-4 mui-col-xs-4 oilTitle">上次换油</div>
+				    <div class="mui-col-sm-4 mui-col-xs-4 oilItem1" id="oilMile">&nbsp;</div>
+				    <div class="mui-col-sm-4 mui-col-xs-4 oilItem2" id="oilDate">&nbsp;</div>
+				</div>
+				<div class="mui-row rowDate">
+				    <div class="mui-col-sm-4 mui-col-xs-4 oilTitle">下次换油</div>
+				    <div class="mui-col-sm-4 mui-col-xs-4 oilItem2" id="oilNewMile">&nbsp;</div>
+				    <div class="mui-col-sm-4 mui-col-xs-4 oilItem1" id="oilNewDate">&nbsp;</div>
+				</div>
+				<div class="mui-row">
+				    <button type="button" class="mui-btn btn-liteP mui-btn-block" value="1" id="updateBtn">修改</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<div class="mui-card">
+		<div class="mui-card-content cardTitle">
+			<div class="mui-row">
+				<div class="mui-col-xs-6 mui-col-sm-6">
+					
+					<select name="" class="mui-btn mui-btn-outlined" id="sumSelect" onchange="selectChange();">
+					</select>
+					
+
+					
+				</div>
+				<div class="mui-col-xs-6 mui-col-sm-6" id="sumTitle"></div>
+			</div>			
+		</div>
+		<div class="mui-card-content" id="summary">
+		</div>
+		<!--<div class="mui-card-footer">页脚</div>-->
+	</div>
+	<div class="mui-text-center" id="version"></div>
+		
+	</body>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script type="text/javascript">	
+			
+			let url="http://api.yourwebsite.com/test"// 测试服,接口地址
+			//let url="http://api.yourwebsite.com/test"// 正式服,接口地址
+			
+			mui.init({
+				pullRefresh: {
+					container: "#main", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+						color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+						height: '50px', //可选,默认50px.下拉刷新控件的高度,
+						range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+						offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+						auto: false, //可选,默认false.首次加载自动上拉刷新一次
+						callback: function() {
+							document.location.href = "tab-setting.html"
+						} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+				}
+			})
+			mui.ready(function() {
+				let sumYear=new Date().getFullYear()
+				
+				mui.plusReady(() => {
+					mui.ajax(url, {
+						data: {
+							"action": "showSummary",
+							"showType": 2
+						},
+						dataType: 'text', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒； 
+						success: function(data1) {
+							updateTable(data1)
+						}
+					})
+					
+					plus.runtime.getProperty(plus.runtime.appid,inf=>{//显示版本号 
+						mui("#version")[0].innerText="v "+inf.version;
+					})
+					
+					mui("#updateBtn")[0].addEventListener('tap', function(e) {//更新换油信息
+						let btn=mui("#updateBtn")[0]
+						let oilMile=mui("#oilMile")[0]
+						let oilDate=mui("#oilDate")[0]
+						
+						let oilOldMile=oilMile.innerText
+						let oilOldDate=oilDate.innerText
+						
+						
+						//console.log(oilOldMile+"----"+oilOldDate)
+						if(btn.value=="1"){
+							
+							btn.classList.add("btn-liteY")
+							btn.classList.remove("btn-liteP")
+							
+				
+							oilMile.innerHTML=`<input type="number" id="oilUpdatedMile" class="btn-liteY" placeholder="输入mile" style="background:#FFFF99;font-size:14px; height:20px; padding:0;margin: 0;" value=${oilOldMile}>`
+							oilDate.innerHTML=`<button id="oilUpdatedDate" class="mui-btn mui-btn-block btn-liteY" style="text-align: left; font-size:14px; height:20px; padding:0;margin: 0;" >${oilOldDate}</button>`
+							
+							//为oilUpdatedDate 按钮添加 dtpicker
+							mui("#oilUpdatedDate")[0].addEventListener('tap', function() {
+								var _self = this;
+								let result=this
+								if(_self.picker) {
+									_self.picker.show(function (rs) {
+										result.innerText = rs.text;
+										_self.picker.dispose();
+										_self.picker = null;
+									});
+								} else {
+									let nDate=mui("#oilUpdatedDate")[0].innerText
+									nDate=nDate.split("-")
+									nDate=nDate[0]+"-"+(nDate[1]<10?("0"+nDate[1]):nDate[1])+"-"+(nDate[2]<10?("0"+nDate[2]):nDate[2])
+
+									var optionsJson = '{"type":"date","value":"'+nDate+'","beginYear":2015}';
+									var options = JSON.parse(optionsJson);
+									var id = this.getAttribute('id');
+									
+									_self.picker = new mui.DtPicker(options);
+									_self.picker.show(function(rs) {
+										/*
+										 * rs.value 拼合后的 value
+										 * rs.text 拼合后的 text
+										 * rs.y 年，可以通过 rs.y.value 和 rs.y.text 获取值和文本
+										 * rs.m 月，用法同年
+										 * rs.d 日，用法同年
+										 * rs.h 时，用法同年
+										 * rs.i 分（minutes 的第二个字母），用法同年
+										 */
+										
+
+										let reStr=rs.y.text+"-"+parseInt(rs.m.text)+"-"+parseInt(rs.d.text)
+										
+										
+										result.innerText = reStr;
+										/* 
+										 * 返回 false 可以阻止选择框的关闭
+										 * return false;
+										 */
+										/*
+										 * 释放组件资源，释放后将将不能再操作组件
+										 * 每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+										 */
+										_self.picker.dispose();
+										_self.picker = null;
+									});
+								}						
+							});	
+							
+							
+							
+							btn.innerText="确认"							
+							btn.value=0 
+							//console.log(1)
+						}else{
+							
+							let isUpdate=false;
+							
+							
+											
+							var btnArray = ['否', '是'];
+							mui.confirm('是否确认修改\nmile为'+mui("#oilUpdatedMile")[0].value+'\n日期为'+mui("#oilUpdatedDate")[0].innerText+'?', 'Hello MUI', btnArray, function(e) {
+								if (e.index == 1) {
+									
+									let val=mui("#oilUpdatedMile")[0].value 
+									let uDate=mui("#oilUpdatedDate")[0].innerText
+									
+									mui.ajax(url, {
+										data: {
+											"action": "updateOilChange",
+											"oilMile": val,
+											"oilDate": uDate
+										},
+										dataType: 'text', //服务器返回json格式数据
+										type: 'get', //HTTP请求类型
+										timeout: 10000, //超时时间设置为10秒； 
+										success: function(data1) {
+											
+											let obj=JSON.parse(data1)
+											console.log(data1)
+											
+											if(obj.action.isSuccess){
+												oilMile.innerText=val
+												oilDate.innerText=uDate
+												console.log(btn.classList.toString())
+												btn.classList.remove("btn-liteY")	
+												btn.classList.add("btn-liteP") 		
+												btn.innerText="修改"
+												btn.value=1
+											}else{
+												mui.alert("出错了,服务器出错了!","更新失败",()=>{
+													location.href="tab-setting.html"
+												})
+											}
+										}
+									})
+								} else {
+									
+								}
+							})
+							//console.log(0)
+						}
+						
+						
+					});
+					
+				}) 
+			})
+			
+			
+				
+			
+			function updateTable(data1){//更新表格函数
+				//console.log(data1)
+							
+				let obj=JSON.parse(data1)
+				let showType=obj.action.showType  //显示
+				let shumTitle="每年"
+				let dateTitle="日期"
+				let list = obj.data//获取数据表数据,为数组
+				
+				mui("#oilMile")[0].innerHTML=obj.oilChangeMile
+				mui("#oilNewMile")[0].innerHTML=parseInt(obj.oilChangeMile)+5001
+				 
+				mui("#oilDate")[0].innerHTML=obj.oilChangeDate
+				let oilNewDate=new Date(new Date(obj.oilChangeDate).getTime()+(365/2)*24*60*60*1000)
+				
+				
+				mui("#oilNewDate")[0].innerHTML=oilNewDate.getFullYear()+"-"+(oilNewDate.getMonth()+1)+"-"+oilNewDate.getDate()//建议半年后换机油
+				
+				if(showType==0){
+					sumTitle="总·统计"
+				}else if(showType==1){
+					sumTitle=obj.data[0].year+"年统计"
+				}else{
+					sumTitle="每年统计"
+					dateTitle="年"
+				}
+				
+				
+				//数据表表头,以及选择查询内容
+				mui("#sumTitle")[0].innerText=sumTitle
+				
+				
+				//select
+				let curYear=new Date().getFullYear()// 获取现在的年份
+				let selectOptionStr=""
+				for(let i=curYear+2;i>2015;i--){
+					let val=showType==2?0:(showType==1?list[0].year:-1)
+					if(i==curYear+2){//第一项
+						selectOptionStr+=`<option value="0" `
+						selectOptionStr+=val==0?`selected="selected"`:""
+						selectOptionStr+=` ">按年统计</option>`
+					}else if(i==curYear+1){//最后一项
+						selectOptionStr+=`<option value="-1" `
+						selectOptionStr+=val==-1?`selected="selected"`:""
+						selectOptionStr+=` >统计所有</option>`
+					}else{
+						selectOptionStr+=`<option value="${i}" `
+						selectOptionStr+=val==i?`selected="selected"`:""
+						selectOptionStr+=` >按${i}年每月统计</option>`						
+					}
+				}
+				mui("#sumSelect")[0].innerHTML=selectOptionStr
+				
+				
+				
+				
+				
+				//数据表本体
+				let str=`
+					<div class="mui-row tableTitle">
+						<div class="mui-col-xs-2 mui-col-sm-2">${dateTitle}</div>
+						<div class="mui-col-xs-2 mui-col-sm-2">mile</div>
+						<div class="mui-col-xs-2 mui-col-sm-2">Gallon</div>
+						<div class="mui-col-xs-2 mui-col-sm-2">Total</div>
+						<div class="mui-col-xs-2 mui-col-sm-2 tableDouble">MPG<br>mile/$</div>
+						<div class="mui-col-xs-2 mui-col-sm-2">Price</div>
+					</div>								
+				`
+				
+				for(let i=0;i<list.length;i++){
+					let o=list[i];
+					let evenRowClass=(i%2==0?"":" tableBodyEven")
+					
+					//配置所有数据
+					let bDate=showType==0?(
+						o.year+"/"+o.month
+					):(showType==1?(
+						o.month+"月"
+					):o.year)
+					
+					
+					let bMile=o.mile
+					let bGallon=o.gallon
+					let bTotal=o.total
+					let bMPG=o.mpg
+					let bMpd=o.mpd
+					let bPrice=o.avgPrice
+					
+					
+					str+=`
+				
+						<div class="mui-row tableBody ${evenRowClass}">
+							<div class="mui-col-xs-2 mui-col-sm-2 tableBodyFirst">${bDate}</div>
+							<div class="mui-col-xs-2 mui-col-sm-2">${bMile}</div>
+							<div class="mui-col-xs-2 mui-col-sm-2">${bGallon}</div>
+							<div class="mui-col-xs-2 mui-col-sm-2">$${bTotal}</div>
+							<div class="mui-col-xs-2 mui-col-sm-2 tableBodyDouble">${bMPG}<br>${bMpd}</div>
+							<div class="mui-col-xs-2 mui-col-sm-2">${bPrice}</div>
+						</div>	
+					`
+				}
+				mui("#summary")[0].innerHTML=str
+			}
+			
+			function selectChange(){
+				let sel=mui("#sumSelect")[0]
+				let showType=1
+				let year=sel.options[sel.selectedIndex].value
+				
+				console.log(year)
+				
+				let selDate={"action": "showSummary",}
+				
+				
+				
+				if(year==0){//按每年
+					showType=2
+				}else if(year==-1){//全部
+					showType=0
+				}else{
+					showType=1
+					selDate.sumYear=parseInt( year )
+				}
+				
+				selDate.showType=showType
+				console.log(JSON.stringify(selDate))
+				
+				mui.ajax(url, {
+					data: selDate,
+					dataType: 'text', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒； 
+					success: function(data1) {
+						updateTable(data1)
+					}
+				}) 
+				//console.log()
+			}
+		</script>
+</html>

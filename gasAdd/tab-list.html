@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+
+		<script src="js/mui.min.js"></script>
+
+		
+		<script type="text/javascript">
+			let url="http://api.yourwebsite.com/test"// 测试服,接口地址
+			//let url="http://api.yourwebsite.com"// 正式服,接口地址
+			function getQueryVariable(variable) {
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for (var i = 0; i < vars.length; i++) {
+					var pair = vars[i].split("=");
+					if (pair[0] == variable) {
+						return pair[1];
+					}
+				}
+				return (false);
+			}
+
+			let chkyear = getQueryVariable("year") ? getQueryVariable("year") : new Date().getFullYear()
+			mui.init({
+				pullRefresh: {
+					container: "#main", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+						color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+						height: '50px', //可选,默认50px.下拉刷新控件的高度,
+						range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+						offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+						auto: false, //可选,默认false.首次加载自动上拉刷新一次
+						callback: function() {
+							document.location.href = "tab-list.html?year=" + chkyear
+						} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+				}
+			})
+			mui.ready(function() {
+
+				mui("#selectYear")[0].value = chkyear
+				
+				//初始化selectYear				
+				let selectOptionStr="";
+				let curYear=new Date().getFullYear()
+//				console.log(curYear)
+				for(let i=curYear;i>=2016;i--){
+					selectOptionStr+=`<option value="${i}"`
+					selectOptionStr+=(i==chkyear?` selected="selected"`:"")
+					selectOptionStr+=`>查询${i}年</option>`
+				}
+				mui("#selectYear")[0].innerHTML=selectOptionStr
+				
+				
+				
+				
+				mui.plusReady(() => {
+					mui.ajax(url, {
+						data: {
+							"action": "json",
+							"year": chkyear
+						},
+						dataType: 'text', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒； 
+						success: function(data1) {
+							var list = JSON.parse(data1).list
+							//console.log(`${list[0].date.month}-${list[0].date.day}`)
+							for (let i = 0; i < list.length; i++) {
+								let color = (i % 2 == 0) ? "#FFCCCC" : "#FF9999";
+
+								mui("#list")[0].innerHTML +=
+									`
+												<div class="mui-row item" style="background-color: ${color};padding: 5px 0;">  
+												    <div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;margin-top: 6px;">
+												    	<label>${list[i].date.month}-${list[i].date.day}</label>
+												    </div>  
+												    <div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;margin-top: 6px; ">
+												    	${list[i].mile}
+												    </div>  
+												    <div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;margin-top: 6px;">
+												    	${list[i].price}
+												    </div>  
+												    <div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;margin-top: 6px;">
+												    	${list[i].gallon}
+												    </div>  
+												    <div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;margin-top: 6px;">
+												    	${list[i].total}
+												    </div>  
+												    <div class="mui-col-xs-1 mui-col-sm-1" style="text-align: right;">
+												    	<button class="mui-btn edit" id="editBtn${list[i].id}" style="background:#CCCCFF;width:30px; padding-left:7px">改</button>
+												    </div>
+												    <div class="mui-col-xs-1 mui-col-sm-1" style="text-align: right;">
+												    	<button class="mui-btn del" id="delBtn${list[i].id}" va="${list[i].date.month}-${list[i].date.day}" style="background: #CC6699;width:30px; padding-left:7px">删</button>
+												    </div>
+												</div>
+												<div class="mui-row mui-hidden editDiv" id="edit${list[i].id}" style="text-align: right;background-color: #E6E6FA ;padding: 5px 0; margin-top: 0">
+													  
+												    <div class="mui-col-xs-4 mui-col-sm-4" style="text-align: right;margin-top: 6px;">
+														<input type="number" id="monthEdit${list[i].id}" style="text-align: right;background:#ffffff;padding:0 3px 0 0;width:25px" value="${list[i].date.month}"/>-
+														<input type="number" id="dayEdit${list[i].id}" style="text-align: right;background:#ffffff;padding:0 3px 0 0;width:25px"  value="${list[i].date.day}"/>
+														
+														-<input type="number" id="yearEdit${list[i].id}" style="text-align: right;background:#ffffff;padding:0 3px 0 0;width:50px"  value="${list[i].date.year}"/>
+												    </div>  
+												    <div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;margin-top: 6px; ">
+														<input type="number" id="mileEdit${list[i].id}" style="text-align: right;background:#ffffff;padding:0 3px 0 0;width:60px" value="${list[i].mile}"/>
+												    </div>  
+												    <div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;margin-top: 6px;">
+														<input type="number" id="priceEdit${list[i].id}" style="text-align: right;background:#ffffff;padding:0 3px 0 0;width:60px" value="${list[i].price}"/>
+												    </div>  
+												    <div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;margin-top: 6px;">
+														<input type="number" id="gallonEdit${list[i].id}" style="text-align: right;background:#ffffff;padding:0 3px 0 0;width:60px" value="${list[i].gallon}"/>
+												    </div>  
+												    
+												    <div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;">
+												    	<button class="mui-btn-blue submit" id="submit${list[i].id}" style="background:#99CC66;width:60px; padding-left:7px; margin-top:10px">确定</button>
+												    </div>
+												</div>
+											`
+
+
+							}
+
+							for (let i = 0; i < mui(".edit").length; i++) {
+								let _this=mui(".edit")[i]
+								let id = "#" + _this.id
+								_this.addEventListener("click", () => {
+									id = id.replace("Btn", "")
+									if (mui(id)[0].classList.contains("mui-hidden")) {
+										mui(".editDiv").each((index, item) => {
+											if (item.id != id)
+												item.classList.add("mui-hidden")
+										})
+										mui(id)[0].classList.remove("mui-hidden")
+									} else {
+										mui(id)[0].classList.add("mui-hidden")
+									}
+								})
+
+								mui(".submit")[i].addEventListener("click", e => {
+									id = id.replace("#edit", "")
+
+									mui.confirm("确定要修改这个数据吗?", "注意", ["否", "是"], e => {
+										if (e.index == 1) {
+
+											mui.ajax(url, {
+												data: {
+													"action": "update",
+													"value": "nDate:" + mui("#yearEdit" + id)[0].value + "-" +
+														mui("#monthEdit" + id)[0].value + "-" +
+														mui("#dayEdit" + id)[0].value + "," +
+														"mile:" + mui("#mileEdit" + id)[0].value + "," +
+														"price:" + mui("#priceEdit" + id)[0].value + "," +
+														"gallon:" + mui("#gallonEdit" + id)[0].value,
+													"condition": "id:" + id
+												},
+												dataType: 'text', //服务器返回json格式数据
+												type: 'get', //HTTP请求类型
+												timeout: 10000, //超时时间设置为10秒； 
+												success: function(data2) {
+
+													console.log(data2)
+												}
+											})
+											document.location.href = "tab-list.html?year=" + chkyear
+										} else {
+											mui.toast("没有修改")
+										}
+									})
+								})
+
+								mui(".del")[i].addEventListener("click", (e) => {
+									let delDate=list[i].date.month+"月"+list[i].date.day+"日";
+									//let delDate=mui("#delBtn"+i).va
+									mui.confirm("确定要删除\"" + delDate + "\"这个数据吗?", "注意", ["否", "是"], e => {
+										if (e.index == 1) {
+											id = id.replace("#editBtn", "")
+
+											mui.ajax(url, {
+												data: {
+													"id":id,
+													"action": "del"
+												},
+												dataType: 'text', //服务器返回json格式数据
+												type: 'get', //HTTP请求类型
+												timeout: 10000, //超时时间设置为10秒； 
+												success: function(data2) {
+
+													console.log(data2)
+												}
+											})
+											document.location.href = "tab-list.html?year=" + chkyear
+										} else {
+											mui.toast("没有删除")
+										}
+									})
+
+								})
+							}
+
+
+						}
+					})
+					//mui("#list")[0].innerHTML="<div><span style='width:50px'>123</span><span style='50%'>123</span></div><div><span>123</span></div>"
+				})
+			})
+			
+			
+			function selectChange(){
+				let sel=mui("#selectYear")[0]
+				let year=sel.options[sel.selectedIndex].value				
+				document.location.href = "tab-list.html?year=" + year
+			}
+		</script>
+	</head>
+
+	<body>
+
+		<div class="mui-input-group" id="main">
+			<div style="font-size: 18px;">
+
+				<div class="mui-row" style="background-color: #CC6699; text-align: right;"> 
+					<div class="mui-col-xs-3 mui-col-sm-3" style="text-align: right; margin-top: 10px;">
+						
+					</div>
+					<div class="mui-col-xs-6 mui-col-sm-6" style="padding-bottom: 2px;">
+
+
+						
+						<select id="selectYear" class="mui-btn" style="background: #CCCCFF;margin-top: 3px;" onchange="selectChange()">
+							<option></option>
+						</select>
+					</div>
+					<div class="mui-col-xs-3 mui-col-sm-3" style="text-align: right; margin-top: 10px;">
+						
+					</div>
+
+				</div>
+				<div class="mui-row" style="background-color: #CC9999;">
+					<div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;">
+						日期
+					</div>
+					<div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;">
+						里程
+					</div>
+					<div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;">
+						价格
+					</div>
+					<div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;">
+						油量
+					</div>
+					<div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;">
+						总价
+					</div>
+					<div class="mui-col-xs-2 mui-col-sm-2" style="text-align: right;">
+						操作
+					</div>
+
+				</div>
+				<div id="list">
+
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+
+	</script>
+</html>

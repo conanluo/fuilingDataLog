@@ -1,0 +1,484 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			#data-area button{
+				width: 100%;
+				height: 30px;
+			}
+			.my-keypad{
+				padding-top: 20px;
+				padding-bottom: 30px;
+				background-color: mistyrose;
+			}
+			.my-keypad button{
+				margin-top: 10px;
+				height: 50px;
+				width: 95%;
+			}
+			.my-keypad .mui-col-xs-8>button, .my-keypad .mui-col-sm-8>button{
+			  width: 99%; 
+			}
+			.my-keypad .mui-col-xs-12>button, .my-keypad .mui-col-sm-12>button{
+				width: 99%;
+			}
+			
+			.mui-btn-red,
+			.mui-btn-red:enabled:active,
+			.mui-btn-red.mui-active:enabled{
+				border: 0;
+				background: #FFCCCC;
+				color:#222222
+			} 
+			.mui-btn-green,
+			.mui-btn-green:enabled:active,
+			.mui-btn-green.mui-active:enabled{
+				border: 0;
+				background: #996699;
+			}
+			.mui-btn-blue{
+				border: 0;
+				background: #CCCCFF;
+				color:#222222
+			}
+			.mui-btn-blue:enabled:active,
+			.mui-btn-blue.mui-active:enabled{
+				border: 0;
+				background: #CCAAFF;
+				color:#222222
+			}
+			.mui-btn-yellow,
+			.mui-btn-yellow:enabled:active,
+			.mui-btn-yellow.mui-active:enabled{
+				border: 0;
+				background: #FFCC99;
+				color:#222222
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="data-area" class="mui-content">
+			<div class="mui-row" style="margin-top: 10px;">
+				<div class="mui-col-sm-2 mui-col-xs-2"><button type="button" class="mui-btn mui-btn-purple my-row">日期</button></div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button type="button" class="mui-btn mui-btn-red my-data" style="margin:0 0 0 4px;">2020</button>
+				</div>
+				<div class="mui-col-sm-1 mui-col-xs-1 mui-btn mui-btn-primary mui-btn-outlined" style="border: 0px;">年</div>
+				<div class="mui-col-sm-2 mui-col-xs-2">
+					<button type="button" class="mui-btn mui-btn-blue mui-btn-outlined my-data" style="">01</button>
+				</div>
+				<div class="mui-col-sm-1 mui-col-xs-1 mui-btn mui-btn-primary mui-btn-outlined" style="border: 0px;">月</div>
+				<div class="mui-col-sm-2 mui-col-xs-2">
+					<button type="button" class="mui-btn mui-btn-blue mui-btn-outlined my-data" style="">02</button>
+				</div>
+				<div class="mui-col-sm-1 mui-col-xs-1 mui-btn mui-btn-primary mui-btn-outlined" style="border: 0px;">日</div>
+				
+			</div>
+			<div class="mui-row" style="margin-top: 10px;">
+				<div class="mui-col-sm-2 mui-col-xs-2"><button type="button" class="mui-btn mui-btn-green my-row">路程</button></div>
+				<div class="mui-col-sm-8 mui-col-xs-8">
+					<button type="button" class="mui-btn mui-btn-blue mui-btn-outlined my-data" style="margin:0 0 0 4px;"></button>
+				</div>
+				<div class="mui-col-sm-2 mui-col-xs-2 mui-btn mui-btn-primary mui-btn-outlined" style="border: 0px;">mile</div>
+				
+			</div>
+			<div class="mui-row" style="margin-top: 10px;">
+				<div class="mui-col-sm-2 mui-col-xs-2"><button type="button" class="mui-btn mui-btn-green my-row">单价</button></div>
+				<div class="mui-col-sm-8 mui-col-xs-8">
+					<button type="button" class="mui-btn mui-btn-blue mui-btn-outlined my-data" style="margin:0 0 0 4px;"></button>
+				</div>
+				<div class="mui-col-sm-2 mui-col-xs-2 mui-btn mui-btn-primary mui-btn-outlined" style="border: 0px;">元/加仑</div>
+				
+			</div>
+			<div class="mui-row" style="margin-top: 10px;">
+				<div class="mui-col-sm-2 mui-col-xs-2"><button type="button" class="mui-btn mui-btn-green my-row">加油量</button></div>
+				<div class="mui-col-sm-8 mui-col-xs-8">
+					<button type="button" class="mui-btn mui-btn-blue mui-btn-outlined my-data" style="margin:0 0 0 4px;"></button>
+				</div>
+				<div class="mui-col-sm-2 mui-col-xs-2 mui-btn mui-btn-primary mui-btn-outlined" style="border: 0px;">加仑</div>
+				
+			</div>
+			<div class="mui-row" style="margin-top: 10px;">
+				<div class="mui-col-sm-2 mui-col-xs-2"><button type="button" class="mui-btn mui-btn-green my-row">费用</button></div>
+				<div class="mui-col-sm-8 mui-col-xs-8">
+					<button type="button" class="mui-btn mui-btn-blue mui-btn-outlined my-data mui-disabled"style="margin:0 0 0 4px;"></button>
+				</div>
+				<div class="mui-col-sm-2 mui-col-xs-2 mui-btn mui-btn-primary mui-btn-outlined" style="border: 0px;">美元</div>
+				
+			</div>	
+		</div>
+<!--		
+		<div class="mui-input-group" style="margin-top: 10px;">
+			<div class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary" id="ok">确认</button>
+				<button type="button" class="mui-btn mui-btn-danger" >取消</button>
+			</div>
+		</div>
+-->
+		<div class="mui-content my-keypad">
+			<div class="mui-row">
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue">1</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue">2</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue">3</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-yellow">←</button>
+				</div>
+			</div>
+			<div class="mui-row">
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue">4</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue">5</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue">6</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-yellow">上一个</button>
+				</div>
+			</div>
+			<div class="mui-row">
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue">7</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue">8</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue">9</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-yellow">下一个</button>
+				</div>
+			</div>
+			<div class="mui-row">
+				<div class="mui-col-sm-6 mui-col-xs-6">
+					<button class="mui-btn mui-btn-blue">0</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-blue mui-disabled">.</button>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<button class="mui-btn mui-btn-yellow">清空</button>
+				</div>
+			</div>
+			<div class="mui-row">
+				
+				<div class="mui-col-sm-12 mui-col-xs-12">
+					<button class="mui-btn mui-btn-blue" id="submitBtn">提交</button>
+				</div>
+			</div>
+		</div>
+	</body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			
+			let url="http://api.yourwebsite.com/test"// 测试服,接口地址
+			//let url="http://api.yourwebsite.com/test"// 正式服,接口地址
+
+			let tempDay=new Date()
+			let today={
+				year:tempDay.getFullYear(),
+				month:tempDay.getMonth()+1,
+				day:tempDay.getDate()
+			}
+			//console.log(JSON.stringify(today))
+			//let 
+			
+			let myIndex=0;
+			let myRow=0;
+			let list=[];
+			let lastData={}
+			let newData={"date":{}};
+			mui.ready(function(){
+				mui.plusReady(()=>{
+					// 清除app缓存
+					plus.cache.calculate(function(size) {
+						// console.log(size)
+						// sizeCache = size;
+						// var size_m = parseFloat(sizeCache / (1024 * 1024)).toFixed(2);
+						if(size > 1) {
+							plus.cache.clear(function() {
+								console.log("缓存清除完毕")
+								
+								//清除缓存后执行	
+								
+								mui.ajax(url,{
+									data:{
+										"action":"json"
+									},
+									dataType:'text',//服务器返回json格式数据
+									type:'get',//HTTP请求类型
+									timeout:10000,//超时时间设置为10秒； 
+									success:function(data1){
+										//console.log(data)
+										data=JSON.parse(data1);
+										list=data.list
+										lastData=list[0];
+										//newData=list[list.length-1];
+										newData.date.month=today.month; 
+										newData.date.day=today.day;
+										newData.mile=lastData.mile;
+										newData.price=lastData.price;
+										newData.gallon=lastData.gallon;
+										
+										//填充数据
+										//日期用今天的
+										mui(".my-data")[0].innerText=today.year;
+										mui(".my-data")[1].innerText=today.month; 
+										mui(".my-data")[2].innerText=today.day;
+										mui(".my-data")[3].innerText=lastData.mile;
+										mui(".my-data")[4].innerText=lastData.price;
+										mui(".my-data")[5].innerText=lastData.gallon;
+										mui(".my-data")[6].innerText=(lastData.price*lastData.gallon).toFixed(2);
+										//newData.date=
+										console.log("newData:"+JSON.stringify(newData));
+									},
+									error:function(xhr,type,errorThrown){
+										//异常处理；
+										console.log(type);
+									}
+								}); 
+								
+								mui(".my-data").each(function(index){
+									this.index=index
+									
+									this.addEventListener('tap',function(e){
+										changeInput(this.index)
+									})
+								})
+								
+								
+								//数字键盘
+								mui(".my-keypad button").each(function(index){
+									this.addEventListener('tap',function(e){
+										
+										//index 3,7,11,13,14 是特殊符号 先处理
+										if(index==3){//退格键
+											let text=mui(".my-data")[myIndex].innerText;
+											changeData(text.substr(0,text.length-1))
+										}else if(index==7){//上一个键
+											let i=myIndex-1;
+											i=i<0?0:i
+											changeInput(i)
+										}else if(index==11){//下一个键
+											let i=myIndex+1;
+											i=i>5?5:i
+											changeInput(i)
+										}else if(index==13){//小数点
+											let text=mui(".my-data")[myIndex].innerText;
+											text+="."
+											changeData(text)
+											this.className="mui-btn mui-btn-blue mui-disabled"
+										}else if(index==14){//清空按钮
+											changeData("")
+										}else if(index==15){
+											
+										}else{
+											let text=mui(".my-data")[myIndex].innerText;
+											changeData(text+this.innerText)
+										}
+									})
+								})
+								
+								//修改数据控制
+								function changeData(data){
+									let num=data
+									//处理数据是否合法
+									//单价,加仑不能大于5个字符(含有小数点的5个字符串),自动结算总费用
+									if(myIndex==5){//加仑数						
+										num=num.substr(0,5)
+										if(num>11) {
+											num="11.00"
+										}
+										let total = num*mui(".my-data")[4].innerText;
+										mui(".my-data")[6].innerText=total.toFixed(2);
+									}else if(myIndex==4){//单价处理							
+										num=num.substr(0,5)
+										if(num>8) {
+											num="8.00"
+										}
+										let total = num*mui(".my-data")[5].innerText;
+										mui(".my-data")[6].innerText=total.toFixed(2);
+									}else if(myIndex==3){//mile数控制,如果日期在最新日期之后,mile数必须大于旧数据
+										//let lastDate=today.year+'-'+lastData.date.month+'-'+lastData.date.day//旧数据日期
+										let nowDate=mui(".my-data")[0].innerText+'-'+mui(".my-data")[1].innerText+'-'+mui(".my-data")[2].innerText//现在数据日期
+										
+									}else if(myIndex<3){//日期控制
+										//console.log(mui(".my-data")[myIndex].innerText)
+										num=data.substr(0,myIndex==0?4:2)
+										if(num>today.year){//年份控制
+											num=today.year;
+										}else{ 
+											if(myIndex==1){//月份控制
+												num=num>12?12:num<0?0:num
+												//num=num<10?"0"+num:num
+											}else if(myIndex==2){
+												var maxD=30;
+												var tempM=parseInt( mui(".my-data")[1].innerText)
+												var tempY=mui(".my-data")[0].innerText
+												//alert(tempM)
+												if(tempM==1||tempM==3||tempM==5||tempM==7||tempM==8||tempM==10||tempM==12){
+													maxD=31
+												}else if(tempM==2) {
+													maxD=tempY%4==0?29:28
+												}
+												num=num>maxD?maxD:num<0?1:num
+											}
+										}
+										
+									}
+									
+									mui(".my-data")[myIndex].innerText=num;
+									//处理小数点的可用与否
+									if(myIndex>=4){
+										if(num.indexOf(".") == -1){//如果没有小数点,显示小数点按钮可用
+											//console.log(data)
+											mui(".my-keypad button")[13].className="mui-btn mui-btn-blue"
+										}else{
+											mui(".my-keypad button")[13].className="mui-btn mui-btn-blue mui-disabled" 											
+										}
+									}
+									//changeInput(myIndex)
+								}
+								
+								//改变需要修改数据的焦点
+								function changeInput(index){
+									let lastIndex=myIndex;
+									let lastBtn=mui('.my-data')[myIndex];
+									//处理跳转颜色
+									mui(".my-data")[myIndex].className=(mui(".my-data")[myIndex].className+" mui-btn-outlined").replace("mui-btn-red","mui-btn-blue");
+									myIndex=index;
+									mui(".my-data")[myIndex].className=mui(".my-data")[myIndex].className.replace(" mui-btn-outlined","").replace("mui-btn-blue","mui-btn-red")
+									//处理行跳转颜色
+									if(myIndex<3){//日期栏
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("purple","green");
+										myRow=0;
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("green","purple");
+									}else if(myIndex==3){//路程栏
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("purple","green");
+										myRow=1;
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("green","purple");
+									}else if(myIndex==4){//单价栏
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("purple","green");
+										myRow=2;
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("green","purple");
+									}else if(myIndex==5){//加油量栏
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("purple","green");
+										myRow=3;
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("green","purple");
+									}else if(myIndex==6){//费用栏
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("purple","green");
+										myRow=4;
+										mui(".my-row")[myRow].className=mui(".my-row")[myRow].className.replace("green","purple");
+									}
+									
+									//处理上一个是空值,恢复lastData,或者today的数值
+									if(lastBtn.innerText==""){
+										if(lastBtn.index==0) {
+											lastBtn.innerText=today.year;
+										}else if(lastBtn.index==1){
+											lastBtn.innerText=today.month;
+										}else if(lastBtn.index==2) {
+											lastBtn.innerText=today.day
+										}else if(lastBtn.index==3) {
+											lastBtn.innerText=lastData.mile
+										}else if(lastBtn.index==4) {
+											lastBtn.innerText=lastData.price
+											mui(".my-data")[6].innerText=(lastData.price*mui(".my-data")[5].innerText).toFixed(2);
+										}else if(lastBtn.index==5) {
+											lastBtn.innerText=lastData.gallon
+											mui(".my-data")[6].innerText=(lastData.gallon*mui(".my-data")[5].innerText).toFixed(2);
+										}
+									}
+									
+									if(lastIndex==1) newData.date.month=lastBtn.innerText
+									else if(lastIndex==2) newData.date.day=lastBtn.innerText
+									else if(lastIndex==3) newData.mile=lastBtn.innerText
+									else if(lastIndex==4) {
+										newData.price=lastBtn.innerText
+										//newData.total=mui(".my-data")[6].innerText
+									}else if(lastIndex==5) {
+										newData.gallon=lastBtn.innerText
+										//newData.total=mui(".my-data")[6].innerText
+									}
+									
+									
+									//console.log("(myRow,myIndex)=>"+myRow+","+myIndex)//后台显示现在是哪行哪列
+									console.log(JSON.stringify(newData))
+ 								}
+								
+
+								//提交按钮监听器
+								mui("#submitBtn")[0].addEventListener('tap',function(e){
+							
+									changeInput(6)
+									//alert(mui(".my-data")[0].innerText+","+newData.date.month+","+newData.date.day+","+newData.mile+","+newData.price+","+newData.gallon)
+									//list.push(newData)
+									//console.log(JSON.stringify( {list}))
+									mui.ajax(url,{
+										data:{
+											"action":"add",
+											"data":mui(".my-data")[0].innerText+","//年
+												  +newData.date.month+","//月
+												  +newData.date.day+","//日
+												  +newData.mile+","//mile数
+												  +newData.price+","//单价
+												  +newData.gallon//加多少
+										},
+										dataType:"text",
+										type:"get",
+										timeout:10000,
+										success(data){
+											console.log("mydata"+mui(".my-data")[0].innerText+","
+											+newData.date.month+","+newData.date.day+","+newData.mile+","+newData.price+","+newData.gallon)
+											console.log(data)
+											document.location.href="tab-add.html"
+										},
+										error(xhr,type,err){
+											//console.log("mydata:"+mui(".my-data")[0].innerText+","+newData.date.month+","+newData.date.day+","+newData.mile+","+newData.price+","+newData.gallon)
+											
+											console.log(type)
+										}
+									})
+								
+								})
+							
+							
+							/******************************************************/
+							
+							});
+						}
+					});
+					
+					
+					//console.log(mui(".my-data")[myIndex].innerText)
+				 
+					
+					
+					
+				})
+				
+				
+				
+				
+				
+			   
+				
+			})
+		</script>
+</html>

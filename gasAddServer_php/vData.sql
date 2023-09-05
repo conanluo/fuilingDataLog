@@ -1,0 +1,3 @@
+Create View
+`vData` AS
+(select `sqlwpblog`.`tdata`.`id` AS `ID`,`sqlwpblog`.`tdata`.`nDate` AS `nDate`,year(`sqlwpblog`.`tdata`.`nDate`) AS `DYear`,month(`sqlwpblog`.`tdata`.`nDate`) AS `DMonth`,dayofmonth(`sqlwpblog`.`tdata`.`nDate`) AS `DDay`,`sqlwpblog`.`tdata`.`mile` AS `mile`,`sqlwpblog`.`tdata`.`price` AS `price`,`sqlwpblog`.`tdata`.`gallon` AS `gallon`,round((`sqlwpblog`.`tdata`.`gallon` * `sqlwpblog`.`tdata`.`price`),2) AS `total` from `sqlwpblog`.`tdata` order by `sqlwpblog`.`tdata`.`nDate` desc)
